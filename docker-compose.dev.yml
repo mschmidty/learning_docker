@@ -1,0 +1,28 @@
+services:
+
+  express-app:
+    build:
+      context: .
+      args: 
+        NODE_ENV: development
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_USER=mschmidty
+      - POSTGRES_PASSWORD=mycatfatfred
+    command: npm run dev
+  
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "3000:80"
+
+  postgres-db:
+    environment: 
+      POSTGRES_USER: mschmidty
+      POSTGRES_PASSWORD: mycatfatfred
+
+    
+  

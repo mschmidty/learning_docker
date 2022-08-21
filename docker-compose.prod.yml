@@ -1,0 +1,29 @@
+services:
+  nginx:
+    ports:
+      - "80:80"
+  express-app:
+    deploy: 
+      replicas: 4
+      restart_policy:
+        condition: any
+      update_config:
+        parallelism: 2;
+        delay: 15s
+    
+    build:
+      context: .
+      args:
+        NODE_ENV: production
+    
+    environment:
+      - NODE_ENV=production
+    
+    command: npm start
+    
+  postgres-db:
+    environment:
+      - POSTGRES_USER:${POSTGRES_USER}
+      - POSTGRES_PASSWORD:${POSTGRES_PASSWORD}
+
+  
